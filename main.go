@@ -2,13 +2,13 @@ package main
 
 import (
   "fmt"
-  "json"
   "net"
   "flag"
   "bufio"
+  "os"
 )
 
-var addr := flag.String("addr", "127.1:9999", "Conenction address (addr:port, addr or :port)")
+var addr string
 
 func createClient(c net.Conn) {
 
@@ -25,7 +25,7 @@ func createClient(c net.Conn) {
           writer.WriteString(msg)
           writer.Flush()
 
-          resp := reader.ReadString('\n')
+          resp, _ := reader.ReadString('\n')
           fmt.Println(resp)
         }
   }()
@@ -33,10 +33,10 @@ func createClient(c net.Conn) {
 
 func main() {
 
+    flag.StringVar(&addr, "addr", "127.1:9999", "Conenction address (addr:port, addr or :port)")
     flag.Parse()
 
     conn, err := net.Dial("tcp", addr)
-    defer conn.Close()
 
     if err != nil {
       fmt.Println("Could not connect to: " + addr)
