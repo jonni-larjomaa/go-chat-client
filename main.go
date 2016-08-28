@@ -40,7 +40,7 @@ func main() {
     flag.StringVar(&addr, "addr", "127.1:9999", "Conenction address (addr:port, addr or :port)")
     flag.Parse()
 
-    conn, err := net.Dial("tcp", ":9090")
+    conn, err := net.Dial("tcp", addr)
 
     if err != nil {
       fmt.Println("Could not connect to: " + addr)
