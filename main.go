@@ -18,21 +18,31 @@ func handleClient(c net.Conn) {
 
     scanner := bufio.NewReader(os.Stdin)
 
-    for {
+    go clientReader(reader)
+    go clientWriter(scanner, writer)
+}
 
-      msg, _ := scanner.ReadString('\n')
+func clientWriter(scanner *bufio.Reader, writer *bufio.Writer){
+  for {
 
-      writer.WriteString(msg)
-      writer.Flush()
+    msg, _ := scanner.ReadString('\n')
 
-      resp, err := reader.ReadString('\n')
+    writer.WriteString(msg)
+    writer.Flush()
 
-      if err != nil {
-        return
-      }
+  }
+}
 
-      fmt.Print(resp)
+func clientReader(reader *bufio.Reader){
+  for {
+    resp, err := reader.ReadString('\n')
+
+    if err != nil {
+      return
     }
+
+    fmt.Print(resp)
+  }
 }
 
 func main() {
@@ -48,4 +58,6 @@ func main() {
     }
 
     handleClient(conn)
+
+    for{}
 }
