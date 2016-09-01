@@ -109,7 +109,7 @@ func getReceiversList(strs []string) []int {
 
 func main() {
 
-    flag.StringVar(&addr, "addr", "127.1:9999", "Conenction address (addr:port, addr or :port)")
+    flag.StringVar(&addr, "addr", "127.1:9090", "Conenction address (addr:port, addr or :port)")
     flag.Parse()
 
     conn, err := net.Dial("tcp", addr)
